@@ -684,6 +684,8 @@ main { display: block; }
   display: flex;
   align-items: flex-end;
   padding: 2rem;
+  background-size: cover;
+  background-position: center;
 }
 
 .work-card__media::after {
@@ -1146,7 +1148,23 @@ main { display: block; }
   letter-spacing: -0.01em;
   color: var(--ink);
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 8rem;
 }
+
+.brands__logo {
+  max-width: 12rem;
+  max-height: 4rem;
+  width: auto;
+  height: auto;
+  filter: brightness(0);
+  opacity: 0.7;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.brands__item:hover .brands__logo { opacity: 1; }
 
 .brands__item:nth-child(odd) { border-right: 1px solid var(--line); }
 
