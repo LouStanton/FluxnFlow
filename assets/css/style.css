@@ -942,9 +942,9 @@ main { display: block; }
 .case-meta {
   display: grid;
   gap: 2.4rem;
-  margin-top: 5rem;
+  margin-top: 0;
   padding-top: 3rem;
-  border-top: 1px solid var(--line);
+  border-top: 0;
 }
 
 .case-meta__item dt {
