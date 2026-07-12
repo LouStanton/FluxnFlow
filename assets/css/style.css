@@ -667,12 +667,10 @@ main { display: block; }
 .work-card {
   position: relative;
   display: block;
-  border-top: 1px solid var(--line);
-  padding-top: 2.4rem;
+  border-top: 0;
+  padding-top: 0;
   transition: opacity var(--dur-fast) var(--ease-out);
 }
-
-.work-grid--featured .work-card { border-top: none; }
 
 .work-card:hover { opacity: 0.82; }
 
