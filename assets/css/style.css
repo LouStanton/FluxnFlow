@@ -42,7 +42,7 @@
   /* Type */
   --font-display: "Google Sans Flex", system-ui, sans-serif;
   --font-body: "Google Sans Flex", system-ui, sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", "Liberation Mono", monospace;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", "Menlo", "Consolas", "Liberation Mono", monospace;
 
   /* Spacing */
   --space-2xs: 0.5rem;
@@ -158,7 +158,14 @@ img { max-width: 100%; display: block; }
   transition: border-color var(--dur-fast) var(--ease-out);
 }
 
-.header__cta.btn-pill { padding: 0.9rem 2.2rem; }
+.header__cta.btn-pill {
+  padding: 0.9rem 2.2rem;
+}
+
+.header__cta.btn-pill:hover {
+  background: linear-gradient(115deg, var(--flux-lime), var(--flux-green));
+  color: var(--ink);
+}
 
 .header.is-scrolled { border-bottom-color: var(--line); }
 
@@ -201,20 +208,6 @@ img { max-width: 100%; display: block; }
   font-size: 1.5rem;
   font-weight: 500;
 }
-
-.btn-pill__label {
-  display: block;
-  transition: transform var(--dur-med) var(--ease-out);
-}
-
-.btn-pill__label--hover {
-  position: absolute;
-  inset: 1.2rem 2.4rem;
-  transform: translateY(160%);
-}
-
-.btn-pill:hover .btn-pill__label { transform: translateY(-160%); }
-.btn-pill:hover .btn-pill__label--hover { transform: translateY(0); }
 
 .btn-pill--ghost {
   background: transparent;
@@ -498,6 +491,7 @@ main { display: block; }
   position: relative;
   z-index: 2;
   font-family: var(--font-mono);
+  font-weight: 500;
   font-size: 1.4rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -539,6 +533,7 @@ main { display: block; }
 
 .section__kicker {
   font-family: var(--font-mono);
+  font-weight: 500;
   font-size: 1.4rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -676,6 +671,8 @@ main { display: block; }
   padding-top: 2.4rem;
   transition: opacity var(--dur-fast) var(--ease-out);
 }
+
+.work-grid--featured .work-card { border-top: none; }
 
 .work-card:hover { opacity: 0.82; }
 
@@ -1070,10 +1067,9 @@ main { display: block; }
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 3rem;
   margin-top: 4rem;
-  text-align: center;
 }
 
 .footer__nav, .footer__socials {
