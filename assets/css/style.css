@@ -820,6 +820,10 @@ main { display: block; }
   background: var(--ink);
   position: relative;
   overflow: hidden;
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  object-fit: cover;
 }
 
 .about-body p {
