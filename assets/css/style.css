@@ -1370,3 +1370,11 @@ textarea:focus-visible {
 .section--blue .section__kicker { color: #fff; }
 .section--blue .btn-pill--ghost { border-color: #fff; color: #fff; }
 .section--blue .btn-pill--ghost:hover { background: #fff; color: var(--ink); }
+
+/* ============ Home banner: cycling line ============
+   "Let's create your Story / Animation / Brand / Campaign".
+   The word slot has a fixed width so the centred line does not
+   jump as words change. Screen readers get one static sentence. */
+
+.page-hero__kicker--cycle { font-size: 1.6rem; }
+.page-hero__kicker--cycle .hero__cycle { min-width: 6.4em; text-align: left; color: var(--ink); }
