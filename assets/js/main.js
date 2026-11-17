@@ -162,7 +162,7 @@
           seed = Math.abs(seed);
           var col = fluxColorAt(x / cols);
           ctx.beginPath();
-          var chaos = Math.max(0, Math.min(1, 1 - (x / cols) / 0.6));
+          var chaos = 1;
           var seed2 = Math.abs((Math.sin(x * 39.346 + y * 11.135) * 24634.6345) % 1);
           var jx = (seed - 0.5) * gap * 1.6 * chaos;
           var jy = (seed2 - 0.5) * gap * 1.6 * chaos;
@@ -242,6 +242,8 @@
       uColInk: { value: new THREE.Color("#0d0d10") },
       // 0 at rest, rises to 1 while the pointer is over the banner
       uActive: { value: 0 },
+      // half-width of the visible field at the origin, so the effect sits under the pointer
+      uHalfW: { value: 8 },
       // Blue tones only - sky, blue, cobalt - sampled across the field by position + slow drift
       uStop0: { value: new THREE.Color("#b4d6ff") },
       uStop1: { value: new THREE.Color("#4298fb") },
@@ -259,6 +261,7 @@
         "uniform vec2 uMouse;",
         "uniform float uPixelRatio;",
         "uniform float uActive;",
+        "uniform float uHalfW;",
         "attribute float aSeed;",
         "varying float vElev;",
         "varying float vSeed;",
@@ -271,19 +274,16 @@
         "  e += sin(p.x * 0.55 + t) * 0.34;",
         "  e += sin(p.z * 0.85 + t * 1.4) * 0.2;",
         "  e += sin((p.x + p.z) * 0.35 + t * 0.8) * 0.28;",
-        "  float mDist = distance(p.xz * vec2(1.0, 2.0), uMouse * vec2(13.0, 6.5));",
-        "  // pointer: a tall swell plus rings rippling outward from the cursor",
-        "  float near = smoothstep(7.0, 0.0, mDist);",
-        "  e += near * 1.1 * uActive;",
-        "  e += sin(mDist * 2.6 - uTime * 6.5) * 0.45 * near * uActive;",
+        "  float mDist = distance(p.xz * vec2(1.0, 2.0), uMouse * vec2(uHalfW, 6.5));",
+        "  // flux by default: every dot is scattered off the grid and restless.",
+        "  // The pointer brings understanding: around it the dots find their rows",
+        "  // and move together as one calm wave (flow).",
+        "  float near = smoothstep(9.5, 1.5, mDist);",
         "  vNear = near * uActive;",
-        "  // flux to flow: scattered and restless on the left, settling into calm",
-        "  // ordered rows on the right. The pointer stirs order back into flux.",
-        "  float chaos = smoothstep(5.0, -10.0, position.x);",
-        "  chaos = clamp(chaos + vNear * 0.9, 0.0, 1.0);",
-        "  e *= mix(0.55, 1.0, chaos);",
-        "  e += sin(aSeed * 40.0 + uTime * 1.4) * 0.75 * chaos;",
-        "  p.x += ((aSeed - 0.5) * 1.9 + sin(aSeed * 23.0 + uTime * 0.9) * 0.25) * chaos;",
+        "  float chaos = 1.0 - clamp(vNear * 1.35, 0.0, 1.0);",
+        "  e *= mix(0.6, 0.35, chaos);",
+        "  e += sin(aSeed * 40.0 + uTime * 1.0) * 0.65 * chaos;",
+        "  p.x += ((aSeed - 0.5) * 1.9 + sin(aSeed * 23.0 + uTime * 0.7) * 0.25) * chaos;",
         "  p.z += (fract(aSeed * 7.31) - 0.5) * 1.9 * chaos;",
         "  p.y = e;",
         "  vElev = e;",
@@ -323,9 +323,9 @@
         "  vec3 hue = fluxSpectrum(vUvPos.x * 0.85 + drift);",
         "  float energy = smoothstep(0.15, 1.3, abs(vElev));",
         "  // pale sky dots throughout; near the pointer they only deepen a little",
-        "  vec3 col = mix(uStop0, uStop1, vNear * 0.4);",
+        "  vec3 col = mix(uStop0, uStop1, vNear * 0.45);",
         "  float alpha = (0.34 + energy * 0.22) * (0.55 + vSeed * 0.45);",
-        "  alpha = min(1.0, alpha + vNear * 0.3);",
+        "  alpha = min(1.0, alpha + vNear * 0.4);",
         "  gl_FragColor = vec4(col, alpha);",
         "}",
       ].join("\n"),
@@ -341,6 +341,7 @@
       renderer.setSize(w, h, false);
       camera.aspect = w / (h || 1);
       camera.updateProjectionMatrix();
+      uniforms.uHalfW.value = Math.tan((55 * Math.PI) / 360) * 7.8 * camera.aspect;
     }
     resize();
     window.addEventListener("resize", resize);
