@@ -64,14 +64,6 @@
     }, 2200);
   }
 
-  /* ------------------------------------------------------------
-     Kicker colour cycle - green, teal, pink, purple, repeating
-     in document order (no lime, that's reserved for the highlight)
-     ------------------------------------------------------------ */
-  var KICKER_COLORS = ["kicker--green", "kicker--teal", "kicker--pink", "kicker--purple"];
-  document.querySelectorAll(".section__kicker, .page-hero__kicker").forEach(function (el, i) {
-    el.classList.add(KICKER_COLORS[i % KICKER_COLORS.length]);
-  });
 
   /* ------------------------------------------------------------
      Scroll-linked ampersand colour - each ".amp-scroll" glyph
@@ -176,13 +168,13 @@
     window.addEventListener("resize", draw);
   }
 
-  // Flux Spectrum stops - lime, green, teal, pink, purple
+  // Flux palette stops - lime, sky, blue, sky, lime
   var FLUX_STOPS = [
-    [217, 237, 92],
-    [95, 221, 140],
-    [82, 199, 214],
-    [236, 111, 163],
-    [142, 110, 240],
+    [219, 255, 102],
+    [180, 214, 255],
+    [66, 152, 251],
+    [180, 214, 255],
+    [219, 255, 102],
   ];
 
   function fluxColorAt(t) {
@@ -240,11 +232,11 @@
       uPixelRatio: { value: Math.min(window.devicePixelRatio || 1, 2) },
       uColInk: { value: new THREE.Color("#0d0d10") },
       // Flux Spectrum - lime, green, teal, pink, purple - sampled across the field by position + slow drift
-      uStop0: { value: new THREE.Color("#d9ed5c") },
-      uStop1: { value: new THREE.Color("#5fdd8c") },
-      uStop2: { value: new THREE.Color("#52c7d6") },
-      uStop3: { value: new THREE.Color("#ec6fa3") },
-      uStop4: { value: new THREE.Color("#8e6ef0") },
+      uStop0: { value: new THREE.Color("#dbff66") },
+      uStop1: { value: new THREE.Color("#b4d6ff") },
+      uStop2: { value: new THREE.Color("#4298fb") },
+      uStop3: { value: new THREE.Color("#4298fb") },
+      uStop4: { value: new THREE.Color("#b4d6ff") },
     };
 
     var material = new THREE.ShaderMaterial({

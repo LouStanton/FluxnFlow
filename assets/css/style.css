@@ -14,28 +14,14 @@
   --line: rgba(13, 13, 16, 0.12);
   --line-strong: rgba(13, 13, 16, 0.24);
 
-  /* Flux Spectrum - the only colour in the system */
-  --flux-lime: #d9ed5c;
-  --flux-green: #5fdd8c;
-  --flux-teal: #52c7d6;
-  --flux-pink: #ec6fa3;
-  --flux-purple: #8e6ef0;
+  /* Flux palette - three colours only. Text is always ink:
+     none of these pass contrast as text on white, so they are
+     used as surfaces and accents, never as type on paper. */
+  --flux-lime: #dbff66;
+  --flux-blue: #4298fb;
+  --flux-sky: #b4d6ff;
 
-  --gradient-flux-linear: linear-gradient(
-    115deg,
-    var(--flux-lime) 0%,
-    var(--flux-green) 25%,
-    var(--flux-teal) 50%,
-    var(--flux-pink) 75%,
-    var(--flux-purple) 100%
-  );
-  --gradient-flux-radial: radial-gradient(
-    120% 120% at 30% 25%,
-    var(--flux-lime) 0%,
-    var(--flux-teal) 45%,
-    var(--flux-pink) 70%,
-    var(--flux-purple) 100%
-  );
+  --gradient-flux-linear: linear-gradient(135deg, var(--flux-blue) 0%, var(--flux-sky) 50%, var(--flux-lime) 100%);
 
   --grain-opacity: 0.08;
 
@@ -120,7 +106,7 @@ h1, h2, h3,
   font-family: var(--font-display);
 }
 
-::selection { background-color: var(--flux-purple); color: #fff; }
+::selection { background-color: var(--flux-lime); color: var(--ink); }
 
 a { color: currentColor; text-decoration: none; }
 img { max-width: 100%; display: block; }
@@ -163,7 +149,7 @@ img { max-width: 100%; display: block; }
 }
 
 .header__cta.btn-pill:hover {
-  background: linear-gradient(115deg, var(--flux-lime), var(--flux-green));
+  background: var(--flux-lime);
   color: var(--ink);
 }
 
@@ -340,7 +326,7 @@ main { display: block; }
 }
 
 .amp-scroll--lime { --amp-color: var(--flux-lime); }
-.amp-scroll--green { --amp-color: var(--flux-green); }
+.amp-scroll--green { --amp-color: var(--flux-blue); }
 
 /* ============ Hero (home page - the signature dot-field) ============ */
 
@@ -478,11 +464,11 @@ main { display: block; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(38% 55% at 80% 10%, var(--flux-purple) 0%, transparent 70%),
-    radial-gradient(32% 46% at 96% 42%, var(--flux-pink) 0%, transparent 70%),
-    radial-gradient(26% 36% at 58% 4%, var(--flux-lime) 0%, transparent 70%),
-    radial-gradient(24% 34% at 88% 72%, var(--flux-teal) 0%, transparent 70%),
-    radial-gradient(20% 28% at 68% 55%, var(--flux-green) 0%, transparent 75%);
+    radial-gradient(40% 58% at 82% 8%, var(--flux-blue) 0%, transparent 70%),
+    radial-gradient(34% 48% at 98% 55%, var(--flux-sky) 0%, transparent 70%),
+    radial-gradient(26% 38% at 56% 0%, var(--flux-lime) 0%, transparent 70%),
+    radial-gradient(26% 36% at 8% 96%, var(--flux-sky) 0%, transparent 72%),
+    radial-gradient(18% 26% at 70% 62%, var(--flux-lime) 0%, transparent 75%);
   filter: blur(70px);
   opacity: 0.6;
 }
@@ -542,10 +528,6 @@ main { display: block; }
   text-align: center;
 }
 
-.kicker--green { color: var(--flux-green); }
-.kicker--teal { color: var(--flux-teal); }
-.kicker--pink { color: var(--flux-pink); }
-.kicker--purple { color: var(--flux-purple); }
 
 .section__title {
   font-family: var(--font-display);
@@ -1262,3 +1244,89 @@ main { display: block; }
 .form__note a { border-bottom: 1px solid currentColor; }
 
 .footer__lede { font-size: 1.8rem; color: rgba(242, 242, 240, 0.7); margin: -1rem 0 3rem; }
+
+/* ============ Palette pass (Nov 2026): lime, blue, sky ============ */
+
+/* Kickers: ink text on a sky pill, so the label carries colour without
+   relying on coloured type. */
+.section__kicker,
+.page-hero__kicker {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.5rem 1.2rem;
+  border-radius: 10rem;
+  background: var(--flux-sky);
+  color: var(--ink);
+  font-size: 1.2rem;
+}
+
+.contact-direct .section__kicker,
+.form .section__kicker { margin-left: 0; }
+
+/* Buttons: lime on hover, ink text throughout */
+.btn-pill { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+.btn-pill:hover { background: var(--flux-lime); color: var(--ink); }
+.btn-pill--ghost:hover { background: var(--ink); color: var(--paper); }
+
+/* Visible keyboard focus everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--flux-lime);
+}
+
+/* Blue band: one bold section per page. Ink on blue is 6.5:1. */
+.section--blue {
+  background: var(--flux-blue);
+  max-width: none;
+  border: 0;
+}
+
+.section--blue .section__kicker { background: var(--ink); color: var(--flux-lime); }
+.section--blue .prose p { font-size: 2rem; }
+.section--blue .btn-pill--ghost { border-color: var(--ink); }
+
+/* Step numbers sit on a lime chip */
+.steps__item::before {
+  display: inline-block;
+  background: var(--flux-lime);
+  color: var(--ink);
+  padding: 0.3rem 0.8rem;
+  border-radius: 10rem;
+}
+
+.case-body__heading::before {
+  content: "";
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-right: 0.8rem;
+  background: var(--flux-blue);
+}
+
+.work-group__title::before {
+  content: "";
+  display: inline-block;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-right: 1.2rem;
+  background: var(--flux-lime);
+  box-shadow: 0.5rem 0.5rem 0 var(--flux-blue);
+}
+
+/* Footer: ink ground, lime and sky accents */
+.footer__kicker { color: var(--flux-lime); }
+.footer__lede { color: var(--flux-sky); }
+.footer__email { border-bottom-color: var(--flux-lime); }
+
+/* Hero highlight: a lime marker stroke under the words, so tight
+   display leading never lets the highlight cover the line above. */
+.page-hero__title .highlight {
+  background: linear-gradient(transparent 62%, var(--flux-lime) 62%, var(--flux-lime) 94%, transparent 94%);
+  padding: 0 0.08em;
+  border-radius: 0;
+}
