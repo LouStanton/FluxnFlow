@@ -1326,15 +1326,13 @@ textarea:focus-visible {
 
 /* ============ Solid page headers and sans labels (Nov 2026) ============ */
 
-/* One bold colour behind every page title, no gradient. Ink on blue is 6.5:1. */
-.page-hero { background: var(--flux-blue); border-bottom: 0; }
+/* A single two-stop gradient behind every page title: blue to sky,
+   one hue. Ink passes contrast on both ends (6.5:1 at the blue end). */
+.page-hero { background: linear-gradient(160deg, var(--flux-blue) 0%, var(--flux-sky) 100%); border-bottom: 0; }
 .page-hero__gradient { display: none; }
 .page-hero__kicker { color: var(--ink); }
 .page-hero .btn-pill--ghost { border-color: var(--ink); }
 .header__logo-mark { background: var(--flux-blue); }
-
-/* The mid-page band steps down to sky so blue stays the header's colour */
-.section--blue { background: var(--flux-sky); }
 
 /* Labels: Google Sans Flex, semi-bold capitals */
 .section__kicker,
