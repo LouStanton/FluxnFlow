@@ -1579,3 +1579,52 @@ h1, h2, h3 { letter-spacing: -0.015em; }
   margin: -0.8rem 0 2.4rem;
 }
 .contact-direct__phone:hover { color: var(--flux-cobalt); }
+
+/* ============ What I do: index rows ============
+   Heading across the top, then one full-width row per service. The
+   number sits above each rule; name, description and deliverables
+   share a baseline beneath it. Stacks to a simple list on phones. */
+
+.split { display: block; }
+.split__head { position: static; margin-bottom: 7rem; }
+.split__head .section__title { max-width: none; font-size: clamp(3rem, 5.4vw, 6rem); }
+
+.split .services__list { counter-reset: service; }
+
+.split .service,
+.split .service:first-child {
+  counter-increment: service;
+  position: relative;
+  margin-top: 5.6rem;
+  padding: 2.8rem 0 0;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 0;
+}
+.split .service:first-child { margin-top: 0; }
+.split .service:last-child { border-bottom: 0; }
+
+.split .service::before {
+  content: "0" counter(service);
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 0.9rem);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--flux-cobalt);
+}
+
+.split .service__name { margin-bottom: 1.4rem; }
+.split .service__desc { margin: 0 0 1.6rem; max-width: 58ch; }
+.split .service__tags { line-height: 1.9; }
+
+@media (min-width: 900px) {
+  .split .service__content {
+    display: grid;
+    grid-template-columns: 4fr 5fr 3fr;
+    column-gap: 5rem;
+    align-items: baseline;
+  }
+  .split .service__name,
+  .split .service__desc { margin-bottom: 0; }
+}
