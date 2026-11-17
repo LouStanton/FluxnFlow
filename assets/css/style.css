@@ -1755,3 +1755,21 @@ h1, h2, h3 { letter-spacing: -0.015em; }
   color: var(--flux-cobalt);
   margin-bottom: 1rem;
 }
+
+/* About: text wraps around the photo again, at a readable width */
+.about-body { max-width: 84rem; }
+@media (min-width: 800px) {
+  .about-body { display: block; max-width: 84rem; }
+  .about-body > .about-photo {
+    float: left;
+    width: 24rem;
+    max-width: 24rem;
+    margin: 0.6rem 3.2rem 1.6rem 0;
+  }
+}
+
+/* What we do: softer rules, and none between the heading and the first row */
+.split .service,
+.split .service:first-child { border-top-color: rgba(13, 13, 16, 0.07); }
+.split .service:first-child { border-top: 0; padding-top: 0; }
+.split__head { margin-bottom: 5rem; }
