@@ -1412,16 +1412,6 @@ h1, h2, h3 { letter-spacing: -0.015em; }
 .section--case > .case-gallery:first-child { margin-top: 0; }
 .section--case .case-meta { padding-top: 0; margin-bottom: 6rem; }
 
-/* Primary buttons carry the lime. An ink outline keeps the shape
-   clear on white, where lime alone has little edge contrast. */
-.btn-pill:not(.btn-pill--ghost) {
-  background: var(--flux-lime);
-  color: var(--ink);
-  box-shadow: inset 0 0 0 1.5px var(--ink);
-}
-.btn-pill:not(.btn-pill--ghost):hover,
-.header__cta.btn-pill:hover { background: var(--ink); color: var(--paper); }
-
 /* About: readable line length, photo in its own column */
 .about-body { max-width: 68ch; }
 @media (min-width: 800px) {
@@ -1448,3 +1438,96 @@ h1, h2, h3 { letter-spacing: -0.015em; }
 .brands__logo[src*="ovato"] { filter: grayscale(1) invert(1) brightness(0.55) contrast(6); mix-blend-mode: multiply; max-height: 5.5rem; }
 
 .contact-direct .section__kicker { color: var(--flux-cobalt); }
+
+/* ============ Home banner: interactive dot field ============
+   The canvas fills the banner at its existing size. It replaces the
+   colour wash on the home page only. */
+.page-hero--home .page-hero__gradient { display: none; }
+.page-hero--home .hero__canvas { z-index: 0; }
+
+/* ============ Case study image slider ============
+   Galleries with more than one image become a full-width slider with
+   dots. Without JavaScript the images simply stack as a grid. */
+.case-slider {
+  position: relative;
+  width: 100vw;
+  margin: 6rem 0 6rem calc(50% - 50vw);
+}
+
+.case-slider__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.case-slider__track::-webkit-scrollbar { display: none; }
+
+.case-slider__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 13, 16, 0.04);
+}
+
+.case-slider__slide img {
+  display: block;
+  width: 100%;
+  height: min(78vh, 56.25vw);
+  min-height: 24rem;
+  aspect-ratio: auto;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.case-slider__arrow {
+  position: absolute;
+  top: calc(50% - 4.6rem);
+  width: 4.8rem;
+  height: 4.8rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.case-slider__arrow:hover { background: var(--flux-lime); color: var(--ink); }
+.case-slider__arrow[disabled] { opacity: 0.25; cursor: default; }
+.case-slider__arrow--prev { left: 2rem; }
+.case-slider__arrow--next { right: 2rem; }
+
+.case-slider__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  padding-top: 1.6rem;
+}
+
+.case-slider__dot {
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.case-slider__dot::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--line-strong);
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.case-slider__dot[aria-current="true"]::before { background: var(--ink); transform: scale(1.25); }
+
+@media (max-width: 699px) {
+  .case-slider__arrow { display: none; }
+}

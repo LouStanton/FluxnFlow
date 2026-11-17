@@ -422,6 +422,89 @@
   }
 
   /* ------------------------------------------------------------
+     Case study galleries become a full-width slider with dots.
+     Native horizontal scrolling with snap, so touch, trackpad and
+     keyboard all work; arrows and dots are added for mouse users.
+     ------------------------------------------------------------ */
+  document.querySelectorAll(".case-gallery").forEach(function (gallery) {
+    var imgs = Array.prototype.slice.call(gallery.querySelectorAll("img"));
+    if (imgs.length < 2) return;
+
+    var slider = document.createElement("div");
+    slider.className = "case-slider";
+    slider.setAttribute("role", "group");
+    slider.setAttribute("aria-roledescription", "carousel");
+    slider.setAttribute("aria-label", "Project images");
+
+    var track = document.createElement("div");
+    track.className = "case-slider__track";
+    track.setAttribute("tabindex", "0");
+
+    imgs.forEach(function (img, i) {
+      var slide = document.createElement("div");
+      slide.className = "case-slider__slide";
+      slide.setAttribute("role", "group");
+      slide.setAttribute("aria-label", "Image " + (i + 1) + " of " + imgs.length);
+      img.removeAttribute("loading");
+      slide.appendChild(img);
+      track.appendChild(slide);
+    });
+
+    function arrow(dir, label, glyph) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "case-slider__arrow case-slider__arrow--" + dir;
+      b.setAttribute("aria-label", label);
+      b.textContent = glyph;
+      return b;
+    }
+    var prev = arrow("prev", "Previous image", "\u2190");
+    var next = arrow("next", "Next image", "\u2192");
+
+    var dots = document.createElement("div");
+    dots.className = "case-slider__dots";
+    var dotEls = imgs.map(function (_, i) {
+      var d = document.createElement("button");
+      d.type = "button";
+      d.className = "case-slider__dot";
+      d.setAttribute("aria-label", "Show image " + (i + 1) + " of " + imgs.length);
+      d.addEventListener("click", function () { goTo(i); });
+      dots.appendChild(d);
+      return d;
+    });
+
+    var current = 0;
+    function goTo(i) {
+      i = Math.max(0, Math.min(imgs.length - 1, i));
+      track.scrollTo({ left: i * track.clientWidth, behavior: reducedMotion ? "auto" : "smooth" });
+    }
+    function sync() {
+      current = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+      dotEls.forEach(function (d, i) {
+        if (i === current) d.setAttribute("aria-current", "true");
+        else d.removeAttribute("aria-current");
+      });
+      prev.disabled = current === 0;
+      next.disabled = current === imgs.length - 1;
+    }
+    prev.addEventListener("click", function () { goTo(current - 1); });
+    next.addEventListener("click", function () { goTo(current + 1); });
+    track.addEventListener("scroll", sync, { passive: true });
+    track.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); goTo(current + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); goTo(current - 1); }
+    });
+    window.addEventListener("resize", function () { track.scrollLeft = current * track.clientWidth; });
+
+    slider.appendChild(track);
+    slider.appendChild(prev);
+    slider.appendChild(next);
+    slider.appendChild(dots);
+    gallery.parentNode.replaceChild(slider, gallery);
+    sync();
+  });
+
+  /* ------------------------------------------------------------
      Contact form - builds a mailto: draft (no backend)
      ------------------------------------------------------------ */
   var form = document.querySelector("[data-contact-form]");
