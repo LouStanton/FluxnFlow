@@ -1628,3 +1628,9 @@ h1, h2, h3 { letter-spacing: -0.015em; }
   .split .service__name,
   .split .service__desc { margin-bottom: 0; }
 }
+
+/* Client logos: no grid lines, plain white ground */
+.brands { border-top: 0; margin-top: 4rem; }
+.brands__item,
+.brands__item:nth-child(odd),
+.brands__item:nth-child(n) { border: 0; }
