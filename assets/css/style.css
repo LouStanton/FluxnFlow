@@ -1531,3 +1531,34 @@ h1, h2, h3 { letter-spacing: -0.015em; }
 @media (max-width: 699px) {
   .case-slider__arrow { display: none; }
 }
+
+/* ============ Round of 17 Nov, afternoon ============ */
+
+/* Home banner: no rule beneath it, headline on two lines at desktop
+   widths, and a solid white second button so dots do not show through */
+.page-hero--home { border-bottom: 0; }
+.page-hero--home .page-hero__title {
+  max-width: none;
+  font-size: clamp(3.4rem, 6.2vw, 7.6rem);
+  text-wrap: balance;
+}
+.page-hero--home .page-hero__lede { max-width: 66ch; }
+.page-hero--home .btn-pill--ghost { background: var(--paper); }
+.page-hero--home .btn-pill--ghost:hover { background: var(--ink); color: var(--paper); }
+
+/* Selected work: three in a row from tablet landscape up */
+@media (min-width: 900px) {
+  .work-grid--featured { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Project boxes are square-cornered everywhere */
+.work-card__media,
+.case-media,
+.case-gallery img,
+.case-slider__slide img { border-radius: 0; }
+
+/* Work page filter buttons */
+.work-filter { justify-content: flex-start; flex-wrap: wrap; }
+.work-filter + .work-grid { margin-top: 4rem; }
+.work-group__title::before { content: none; }
+.work-filter { margin-top: 0; }

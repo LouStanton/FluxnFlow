@@ -173,13 +173,13 @@
     window.addEventListener("resize", draw);
   }
 
-  // Flux palette stops - lime, sky, blue, sky, lime
+  // Dot field stops - blue tones only: sky, blue, cobalt, blue, sky
   var FLUX_STOPS = [
-    [219, 255, 102],
     [180, 214, 255],
     [66, 152, 251],
+    [18, 87, 201],
+    [66, 152, 251],
     [180, 214, 255],
-    [219, 255, 102],
   ];
 
   function fluxColorAt(t) {
@@ -236,10 +236,12 @@
       uMouse: { value: new THREE.Vector2(0, 0) },
       uPixelRatio: { value: Math.min(window.devicePixelRatio || 1, 2) },
       uColInk: { value: new THREE.Color("#0d0d10") },
-      // Flux Spectrum - lime, green, teal, pink, purple - sampled across the field by position + slow drift
-      uStop0: { value: new THREE.Color("#dbff66") },
-      uStop1: { value: new THREE.Color("#b4d6ff") },
-      uStop2: { value: new THREE.Color("#4298fb") },
+      // 0 at rest, rises to 1 while the pointer is over the banner
+      uActive: { value: 0 },
+      // Blue tones only - sky, blue, cobalt - sampled across the field by position + slow drift
+      uStop0: { value: new THREE.Color("#b4d6ff") },
+      uStop1: { value: new THREE.Color("#4298fb") },
+      uStop2: { value: new THREE.Color("#1257c9") },
       uStop3: { value: new THREE.Color("#4298fb") },
       uStop4: { value: new THREE.Color("#b4d6ff") },
     };
@@ -252,9 +254,11 @@
         "uniform float uTime;",
         "uniform vec2 uMouse;",
         "uniform float uPixelRatio;",
+        "uniform float uActive;",
         "attribute float aSeed;",
         "varying float vElev;",
         "varying float vSeed;",
+        "varying float vNear;",
         "varying vec2 vUvPos;",
         "void main() {",
         "  vec3 p = position;",
@@ -264,14 +268,19 @@
         "  e += sin(p.z * 0.85 + t * 1.4) * 0.35;",
         "  e += sin((p.x + p.z) * 0.35 + t * 0.8) * 0.45;",
         "  float mDist = distance(p.xz * vec2(1.0, 2.0), uMouse * vec2(13.0, 6.5));",
-        "  e += smoothstep(5.0, 0.0, mDist) * 1.2;",
+        "  // pointer: a tall swell plus rings rippling outward from the cursor",
+        "  float near = smoothstep(7.0, 0.0, mDist);",
+        "  e += near * (0.5 + 2.1 * uActive);",
+        "  e += sin(mDist * 2.6 - uTime * 6.5) * 0.7 * near * uActive;",
+        "  e += sin(p.x * 1.7 + uTime * 3.2) * 0.25 * near * uActive;",
+        "  vNear = near * uActive;",
         "  p.y = e;",
         "  vElev = e;",
         "  vSeed = aSeed;",
         "  vUvPos = vec2(position.x / 26.0 + 0.5, position.z / 13.0 + 0.5);",
         "  vec4 mv = modelViewMatrix * vec4(p, 1.0);",
         "  gl_Position = projectionMatrix * mv;",
-        "  gl_PointSize = (1.6 + aSeed * 1.8) * uPixelRatio * (6.0 / -mv.z);",
+        "  gl_PointSize = (1.6 + aSeed * 1.8) * (1.0 + vNear * 1.3) * uPixelRatio * (6.0 / -mv.z);",
         "}",
       ].join("\n"),
       fragmentShader: [
@@ -284,6 +293,7 @@
         "uniform float uTime;",
         "varying float vElev;",
         "varying float vSeed;",
+        "varying float vNear;",
         "varying vec2 vUvPos;",
         "vec3 fluxSpectrum(float t) {",
         "  t = fract(t);",
@@ -303,6 +313,8 @@
         "  float energy = smoothstep(0.15, 1.3, abs(vElev));",
         "  vec3 col = mix(uColInk, hue, 0.55 + energy * 0.45);",
         "  float alpha = (0.3 + energy * 0.6) * (0.55 + vSeed * 0.45);",
+        "  col = mix(col, hue, vNear * 0.6);",
+        "  alpha = min(1.0, alpha + vNear * 0.45);",
         "  gl_FragColor = vec4(col, alpha);",
         "}",
       ].join("\n"),
@@ -322,8 +334,9 @@
     resize();
     window.addEventListener("resize", resize);
 
-    var mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    var mouse = { x: 0, y: 0, tx: 0, ty: 0, active: 0, activeTarget: 0 };
     function onPointerMove(e) {
+      mouse.activeTarget = 1;
       var rect = wrap.getBoundingClientRect();
       mouse.tx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       mouse.ty = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
@@ -331,6 +344,7 @@
     function onPointerLeave() {
       mouse.tx = 0;
       mouse.ty = 0;
+      mouse.activeTarget = 0;
     }
     wrap.addEventListener("pointermove", onPointerMove);
     wrap.addEventListener("pointerleave", onPointerLeave);
@@ -346,9 +360,11 @@
       if (!visible) return;
       uniforms.uTime.value = clock.getElapsedTime();
 
-      mouse.x += (mouse.tx - mouse.x) * 0.06;
-      mouse.y += (mouse.ty - mouse.y) * 0.06;
+      mouse.x += (mouse.tx - mouse.x) * 0.12;
+      mouse.y += (mouse.ty - mouse.y) * 0.12;
+      mouse.active += (mouse.activeTarget - mouse.active) * 0.07;
       uniforms.uMouse.value.set(mouse.x, mouse.y);
+      uniforms.uActive.value = mouse.active;
 
       camera.position.x = mouse.x * 0.5;
       camera.position.y = 2.2 + mouse.y * 0.25;
@@ -410,8 +426,12 @@
       btn.addEventListener("click", function () {
         var filter = btn.getAttribute("data-filter");
 
-        filterBtns.forEach(function (b) { b.classList.remove("is-active"); });
+        filterBtns.forEach(function (b) {
+          b.classList.remove("is-active");
+          b.setAttribute("aria-pressed", "false");
+        });
         btn.classList.add("is-active");
+        btn.setAttribute("aria-pressed", "true");
 
         workCards.forEach(function (card) {
           var match = filter === "all" || card.getAttribute("data-category") === filter;

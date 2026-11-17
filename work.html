@@ -58,9 +58,14 @@
     </section>
 
     <section class="section container bg-paper">
-      <h2 class="work-group__title">Government and public sector</h2>
+      <div class="work-filter" role="group" aria-label="Filter work by sector">
+        <button type="button" class="work-filter__btn is-active" data-filter="all" aria-pressed="true">All work</button>
+        <button type="button" class="work-filter__btn" data-filter="government" aria-pressed="false">Government and public sector</button>
+        <button type="button" class="work-filter__btn" data-filter="commercial" aria-pressed="false">Energy and commercial</button>
+      </div>
+
       <div class="work-grid">
-      <a class="work-card" href="work/cumberland-plains.html" data-reveal>
+      <a class="work-card" data-category="government" href="work/cumberland-plains.html" data-reveal>
         <div class="work-card__media" style="background-image:url('assets/images/cumberland-plains/CPCP_SS02.jpg')">
           <span class="work-card__tag">Government · Environment</span>
         </div>
@@ -70,7 +75,7 @@
           <p class="work-card__line">Two animations that explain a Western Sydney conservation plan to residents, not planners.</p>
         </div>
       </a>
-      <a class="work-card" href="work/groundwater.html" data-reveal>
+      <a class="work-card" data-category="government" href="work/groundwater.html" data-reveal>
         <div class="work-card__media" style="background-image:url('assets/images/groundwater/DPE_Groundwater_01.jpg')">
           <span class="work-card__tag">Government · Environment</span>
         </div>
@@ -80,7 +85,7 @@
           <p class="work-card__line">An explainer for a water system nobody can see. Its reception led to a six-part series.</p>
         </div>
       </a>
-      <a class="work-card" href="work/dark-sky.html" data-reveal>
+      <a class="work-card" data-category="government" href="work/dark-sky.html" data-reveal>
         <div class="work-card__media" style="background-image:url('assets/images/dark-sky/Dark-Sky_02.jpg')">
           <span class="work-card__tag">Government · Education</span>
         </div>
@@ -90,7 +95,7 @@
           <p class="work-card__line">An animated astronomer shows school children why dark night skies are worth protecting.</p>
         </div>
       </a>
-      <a class="work-card" href="work/mdc-brand-refresh.html" data-reveal>
+      <a class="work-card" data-category="government" href="work/mdc-brand-refresh.html" data-reveal>
         <div class="work-card__media" style="background-image:url('assets/images/mdc-brand-refresh/MDC-Website-Presentation-3.png')">
           <span class="work-card__tag">Government · Brand</span>
         </div>
@@ -100,7 +105,7 @@
           <p class="work-card__line">A refreshed council brand, and a website rebuilt around what residents need.</p>
         </div>
       </a>
-      <a class="work-card" href="work/manawatu-hub-libraries.html" data-reveal>
+      <a class="work-card" data-category="government" href="work/manawatu-hub-libraries.html" data-reveal>
         <div class="work-card__media" style="background-image:url('assets/images/manawatu-hub-libraries/MCHL-Header-01.png')">
           <span class="work-card__tag">Government · Brand</span>
         </div>
@@ -110,13 +115,7 @@
           <p class="work-card__line">One identity for a new library building and the six satellite libraries around it.</p>
         </div>
       </a>
-      </div>
-    </section>
-
-    <section class="section container bg-paper divider-top">
-      <h2 class="work-group__title">Energy and commercial</h2>
-      <div class="work-grid">
-      <a class="work-card" href="work/lpe-brand.html" data-reveal>
+      <a class="work-card" data-category="commercial" href="work/lpe-brand.html" data-reveal>
         <div class="work-card__media" style="background-image:url('assets/images/lpe-brand/Website-Mock-Ups.jpg')">
           <span class="work-card__tag">Energy · Brand</span>
         </div>
@@ -126,7 +125,7 @@
           <p class="work-card__line">A brand refresh that positioned a Queensland electricity retailer as the friendlier, more sustainable choice.</p>
         </div>
       </a>
-      <a class="work-card" href="work/lpe-solar-bank.html" data-reveal>
+      <a class="work-card" data-category="commercial" href="work/lpe-solar-bank.html" data-reveal>
         <div class="work-card__media" style="background-image:url('assets/images/lpe-solar-bank/Billboard-Mock-Up.jpg')">
           <span class="work-card__tag">Energy · Campaign</span>
         </div>
@@ -136,7 +135,7 @@
           <p class="work-card__line">Animation, billboards and print that introduced a new solar and battery product.</p>
         </div>
       </a>
-      <a class="work-card" href="work/ovato-innovation.html" data-reveal>
+      <a class="work-card" data-category="commercial" href="work/ovato-innovation.html" data-reveal>
         <div class="work-card__media" style="background-image:url('assets/images/ovato-innovation/OVATO-Innovation_01.jpg')">
           <span class="work-card__tag">Print and marketing · Brand</span>
         </div>
@@ -146,7 +145,7 @@
           <p class="work-card__line">A brand explainer that turned a merged company's technology platforms into one clear story.</p>
         </div>
       </a>
-      <a class="work-card" href="work/my-online-orders.html" data-reveal>
+      <a class="work-card" data-category="commercial" href="work/my-online-orders.html" data-reveal>
         <div class="work-card__media" style="background-image:url('assets/images/my-online-orders/video-still.jpg')">
           <span class="work-card__tag">Print and marketing · Product</span>
         </div>
@@ -156,7 +155,7 @@
           <p class="work-card__line">A character-led explainer that introduced a new online ordering platform.</p>
         </div>
       </a>
-      <a class="work-card" href="work/redcycle.html" data-reveal>
+      <a class="work-card" data-category="commercial" href="work/redcycle.html" data-reveal>
         <div class="work-card__media" style="background-image:url('assets/images/redcycle/Smiths_01.jpg')">
           <span class="work-card__tag">FMCG · Sustainability</span>
         </div>
@@ -175,8 +174,7 @@
     <div class="container">
       <div class="footer__top">
         <p class="footer__kicker">Get in touch</p>
-        <h2 class="footer__title">Have something hard<br/>to explain?</h2>
-        <p class="footer__lede">Tell me what it is and who needs to understand it.</p>
+        <h2 class="footer__title">Have a complex story<br/>to tell? Let's talk.</h2>
         <a class="footer__email" href="mailto:hello@fluxnflow.com">hello@fluxnflow.com</a>
       </div>
       <div class="footer__bottom">
