@@ -1162,3 +1162,103 @@ main { display: block; }
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] { opacity: 1; transform: none; transition: none; }
 }
+
+/* ============ Clarity pass (Nov 2026) ============
+   Home opens with type only (no dot-field canvas), reusing the
+   inner-page hero. New helpers for the simpler page structure. */
+
+.page-hero__lede { max-width: 62ch; }
+.page-hero--home .page-hero__title { max-width: 16ch; }
+
+.page-hero__actions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 3.6rem;
+}
+
+.page-hero__note {
+  position: relative;
+  z-index: 2;
+  margin-top: 2.8rem;
+  font-size: 1.4rem;
+  color: var(--ink-secondary);
+}
+
+.section__more { margin-top: 4rem; text-align: center; }
+
+.work-card__line {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  margin-top: 1rem;
+  max-width: 46ch;
+}
+
+.work-group__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 3.2vw, 3.4rem);
+  line-height: 1.1;
+}
+
+.work-group__title + .work-grid { margin-top: 3.2rem; }
+
+.prose { max-width: 68ch; margin: 0 auto; }
+.prose p { font-size: 1.8rem; line-height: 1.6; margin-bottom: 2rem; }
+.prose a { border-bottom: 1px solid currentColor; }
+.prose--center { text-align: center; margin-top: 3.2rem; }
+
+.service__desc { max-width: 62ch; margin-left: auto; margin-right: auto; }
+
+.steps {
+  list-style: none;
+  display: grid;
+  gap: 0;
+  margin-top: 6rem;
+  counter-reset: step;
+}
+
+.steps__item {
+  border-top: 1px solid var(--line);
+  padding: 2.8rem 0;
+  counter-increment: step;
+}
+
+.steps__item::before {
+  content: "0" counter(step);
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  color: var(--ink-secondary);
+  margin-bottom: 1.2rem;
+}
+
+.steps__name { font-size: 2.4rem; margin-bottom: 1rem; }
+.steps__item p { font-size: 1.6rem; line-height: 1.55; }
+
+@media (min-width: 900px) {
+  .steps { grid-template-columns: repeat(4, 1fr); gap: 3rem; }
+}
+
+.about-body__heading {
+  clear: both;
+  font-size: clamp(2.4rem, 3.2vw, 3.4rem);
+  line-height: 1.1;
+  margin: 5rem 0 2rem;
+}
+
+.case-body__heading {
+  font-size: 1.3rem;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-secondary);
+  margin-top: 1.6rem;
+}
+
+.form__note a { border-bottom: 1px solid currentColor; }
+
+.footer__lede { font-size: 1.8rem; color: rgba(242, 242, 240, 0.7); margin: -1rem 0 3rem; }

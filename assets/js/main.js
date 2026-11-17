@@ -434,11 +434,13 @@
       var name = form.querySelector("#name").value.trim();
       var org = form.querySelector("#organisation").value.trim();
       var message = form.querySelector("#message").value.trim();
+      var timelineEl = form.querySelector("#timeline");
+      var timeline = timelineEl ? timelineEl.value.trim() : "";
       var email = form.getAttribute("data-contact-email") || "";
 
       var subject = encodeURIComponent("Project enquiry from " + (name || "website"));
       var body = encodeURIComponent(
-        "Name: " + name + "\nOrganisation: " + org + "\n\n" + message
+        "Name: " + name + "\nOrganisation: " + org + (timeline ? "\nTimeline: " + timeline : "") + "\n\n" + message
       );
       window.location.href = "mailto:" + email + "?subject=" + subject + "&body=" + body;
     });
