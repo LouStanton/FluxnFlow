@@ -1324,14 +1324,9 @@ textarea:focus-visible {
   border-radius: 0;
 }
 
-/* ============ Solid page headers and sans labels (Nov 2026) ============ */
+/* ============ Sans labels and logo mark (Nov 2026) ============ */
 
-/* A single two-stop gradient behind every page title: blue to sky,
-   one hue. Ink passes contrast on both ends (6.5:1 at the blue end). */
-.page-hero { background: linear-gradient(160deg, var(--flux-blue) 0%, var(--flux-sky) 100%); border-bottom: 0; }
-.page-hero__gradient { display: none; }
-.page-hero__kicker { color: var(--ink); }
-.page-hero .btn-pill--ghost { border-color: var(--ink); }
+/* Page headers use the soft three-colour wash (.page-hero__gradient) on white. */
 .header__logo-mark { background: var(--flux-blue); }
 
 /* Labels: Google Sans Flex, semi-bold capitals */
