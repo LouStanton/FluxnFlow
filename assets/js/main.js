@@ -467,10 +467,15 @@
         btn.classList.add("is-active");
         btn.setAttribute("aria-pressed", "true");
 
+        var shown = 0;
         workCards.forEach(function (card) {
-          var match = filter === "all" || card.getAttribute("data-category") === filter;
+          var cats = (card.getAttribute("data-category") || "").split(" ");
+          var match = filter === "all" || cats.indexOf(filter) !== -1;
           card.classList.toggle("is-filtered-out", !match);
+          if (match) shown++;
         });
+        var empty = document.querySelector("[data-work-empty]");
+        if (empty) empty.hidden = shown > 0;
       });
     });
   }

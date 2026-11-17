@@ -1644,3 +1644,68 @@ h1, h2, h3 { letter-spacing: -0.015em; }
 .home .section__intro { margin-left: auto; margin-right: auto; }
 .home .split__head .section__kicker,
 .home .split__head .section__title { text-align: center; margin-left: auto; margin-right: auto; }
+
+/* ============ Left-aligned system (17 Nov, evening) ============
+   Everything reads from the left edge of the page grid: banners,
+   section headings, the cobalt band and the footer. */
+
+.page-hero {
+  align-items: flex-start;
+  text-align: left;
+  border-bottom: 0;
+  padding-left: max(2rem, calc((100% - 132rem) / 2 + 2rem));
+  padding-right: max(2rem, calc((100% - 132rem) / 2 + 2rem));
+}
+@media (min-width: 900px) {
+  .page-hero,
+  .page-hero:not(.page-hero--home) {
+    padding-left: max(3rem, calc((100% - 132rem) / 2 + 3rem));
+    padding-right: max(3rem, calc((100% - 132rem) / 2 + 3rem));
+  }
+}
+.page-hero__actions { justify-content: flex-start; }
+.page-hero__kicker--cycle .hero__cycle { min-width: 0; }
+
+/* Home banner: the soft colour wash again, a little quieter */
+.page-hero--home .page-hero__gradient { display: block; opacity: 0.45; }
+
+.home .section__kicker,
+.home .section__title,
+.home .section__intro,
+.home .section__more,
+.home .split__head .section__kicker,
+.home .split__head .section__title { text-align: left; margin-left: 0; margin-right: 0; }
+
+.section--blue {
+  padding-left: max(2rem, calc((100% - 132rem) / 2 + 2rem));
+  padding-right: max(2rem, calc((100% - 132rem) / 2 + 2rem));
+}
+@media (min-width: 900px) {
+  .section--blue {
+    padding-left: max(3rem, calc((100% - 132rem) / 2 + 3rem));
+    padding-right: max(3rem, calc((100% - 132rem) / 2 + 3rem));
+  }
+}
+.section--blue .section__kicker,
+.section--blue .section__title,
+.section--blue .section__more { text-align: left; }
+.section--blue .section__title { margin-left: 0; margin-right: 0; }
+.section--blue .prose { margin: 3.2rem 0 0; max-width: 62ch; text-align: left; }
+.section--blue .prose p { font-size: 2.2rem; line-height: 1.5; }
+
+.footer__top { align-items: flex-start; text-align: left; }
+
+/* Project tags sit in white pills on the image */
+.work-card__tag {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 0.5rem 1.2rem;
+  border-radius: 10rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.work-empty { margin-top: 4rem; font-size: 1.8rem; color: var(--ink-secondary); }
+
+/* Contact form labels in sentence case */
+.form__field label { text-transform: none; letter-spacing: 0; font-size: 1.5rem; color: var(--ink); }
