@@ -1709,3 +1709,49 @@ h1, h2, h3 { letter-spacing: -0.015em; }
 
 /* Contact form labels in sentence case */
 .form__field label { text-transform: none; letter-spacing: 0; font-size: 1.5rem; color: var(--ink); }
+
+/* ============ Round of 17 Nov, 5.30pm ============ */
+
+/* Site header: clear over the banner, white once the page scrolls.
+   No rule beneath it; logo, menu and button share one centre line. */
+.header {
+  align-items: center;
+  padding-top: 1.4rem;
+  padding-bottom: 1.4rem;
+  background: transparent;
+  border-bottom: 0;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.header.is-scrolled { background: var(--paper); border-bottom: 0; }
+.header__logo, .header__nav, .header__cta { align-self: center; }
+.header__nav { align-items: center; }
+@media (min-width: 900px) {
+  .header { padding-top: 1.6rem; padding-bottom: 1.6rem; }
+}
+
+/* Tags on images: sentence case */
+.work-card__tag { text-transform: none; letter-spacing: 0; font-size: 1.3rem; }
+
+/* What we do: no numbers, rows a little closer */
+.split .service::before { content: none; }
+.split .service,
+.split .service:first-child { margin-top: 0; padding: 3.4rem 0; }
+.split .service:first-child { padding-top: 3.4rem; }
+
+/* Mission text: a wider measure */
+.section--blue .prose { max-width: 80ch; }
+
+/* Case studies: detail labels match the small cobalt section labels */
+.case-meta { grid-template-columns: 1fr; }
+@media (min-width: 700px) {
+  .case-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 90rem; }
+}
+.case-meta__item dt {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--flux-cobalt);
+  margin-bottom: 1rem;
+}
