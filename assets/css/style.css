@@ -1378,3 +1378,73 @@ textarea:focus-visible {
 
 .page-hero__kicker--cycle { font-size: 1.6rem; }
 .page-hero__kicker--cycle .hero__cycle { min-width: 6.4em; text-align: left; color: var(--ink); }
+
+/* ============ Finish pass (Nov 2026) ============ */
+
+/* Display type sits slightly tight, not wide */
+h1, h2, h3 { letter-spacing: -0.015em; }
+
+/* One alignment system: section headings read from the left.
+   Only the page banner and the cobalt band stay centred. */
+.section__kicker,
+.section__title,
+.section__intro { text-align: left; margin-left: 0; margin-right: 0; }
+.section__more { text-align: left; }
+.section--blue .section__kicker,
+.section--blue .section__title,
+.section--blue .section__more { text-align: center; }
+.section--blue .section__title { margin-left: auto; margin-right: auto; }
+
+/* Inner pages: a clear step below the home banner */
+.page-hero:not(.page-hero--home) { padding: 12rem 2rem 5rem; }
+.page-hero:not(.page-hero--home) .page-hero__title {
+  font-size: clamp(3.2rem, 4.6vw, 5.6rem);
+  line-height: 1.06;
+  max-width: 24ch;
+}
+@media (min-width: 900px) {
+  .page-hero:not(.page-hero--home) { padding: 13rem 3rem 5.5rem; }
+}
+
+/* Case studies: the work comes first, details after */
+.section--case { padding-top: 4rem; }
+.section--case > .case-media:first-child,
+.section--case > .case-gallery:first-child { margin-top: 0; }
+.section--case .case-meta { padding-top: 0; margin-bottom: 6rem; }
+
+/* Primary buttons carry the lime. An ink outline keeps the shape
+   clear on white, where lime alone has little edge contrast. */
+.btn-pill:not(.btn-pill--ghost) {
+  background: var(--flux-lime);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+.btn-pill:not(.btn-pill--ghost):hover,
+.header__cta.btn-pill:hover { background: var(--ink); color: var(--paper); }
+
+/* About: readable line length, photo in its own column */
+.about-body { max-width: 68ch; }
+@media (min-width: 800px) {
+  .about-body {
+    max-width: none;
+    display: grid;
+    grid-template-columns: 22rem minmax(0, 66ch);
+    column-gap: 6rem;
+    align-items: start;
+  }
+  .about-body > * { grid-column: 2; }
+  .about-body > .about-photo {
+    grid-column: 1;
+    grid-row: 1 / span 12;
+    float: none;
+    max-width: none;
+    margin: 0.6rem 0 0;
+  }
+}
+
+/* Client logos: grey them without turning boxed logos into solid blocks */
+.brands__logo[src*="redcycle"],
+.brands__logo[src*="snap-printing"] { filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
+.brands__logo[src*="ovato"] { filter: grayscale(1) invert(1) brightness(0.55) contrast(6); mix-blend-mode: multiply; max-height: 5.5rem; }
+
+.contact-direct .section__kicker { color: var(--flux-cobalt); }
