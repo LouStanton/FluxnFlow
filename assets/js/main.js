@@ -153,7 +153,7 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
 
-      var gap = w < 700 ? 26 : 34;
+      var gap = w < 700 ? 40 : 54;
       var cols = Math.ceil(w / gap) + 1;
       var rows = Math.ceil(h / gap) + 1;
       for (var y = 0; y < rows; y++) {
@@ -212,8 +212,8 @@
     camera.lookAt(0, 0, 0);
 
     // grid of points displaced by layered sine waves in the vertex shader
-    var COLS = 150;
-    var ROWS = 70;
+    var COLS = 72;
+    var ROWS = 32;
     var W = 26;
     var H = 13;
     var count = COLS * ROWS;
@@ -266,32 +266,44 @@
         "varying float vElev;",
         "varying float vSeed;",
         "varying float vNear;",
+        "varying float vFade;",
         "varying vec2 vUvPos;",
         "void main() {",
-        "  vec3 p = position;",
+        "  vec3 g = position;",
         "  float t = uTime * 0.38;",
-        "  float e = 0.0;",
-        "  e += sin(p.x * 0.55 + t) * 0.34;",
-        "  e += sin(p.z * 0.85 + t * 1.4) * 0.2;",
-        "  e += sin((p.x + p.z) * 0.35 + t * 0.8) * 0.28;",
-        "  float mDist = distance(p.xz * vec2(1.0, 2.0), uMouse * vec2(uHalfW, 6.5));",
-        "  // flux by default: every dot is scattered off the grid and restless.",
-        "  // The pointer brings understanding: around it the dots find their rows",
-        "  // and move together as one calm wave (flow).",
-        "  float near = smoothstep(9.5, 1.5, mDist);",
-        "  vNear = near * uActive;",
-        "  float chaos = 1.0 - clamp(vNear * 1.35, 0.0, 1.0);",
-        "  e *= mix(0.6, 0.35, chaos);",
-        "  e += sin(aSeed * 40.0 + uTime * 1.0) * 0.65 * chaos;",
-        "  p.x += ((aSeed - 0.5) * 1.9 + sin(aSeed * 23.0 + uTime * 0.7) * 0.25) * chaos;",
-        "  p.z += (fract(aSeed * 7.31) - 0.5) * 1.9 * chaos;",
-        "  p.y = e;",
-        "  vElev = e;",
+        "  // pointer in field space",
+        "  float mx = uMouse.x * uHalfW;",
+        "  float mz = -uMouse.y * 4.2;",
+        "",
+        "  // FLUX (default): every dot is off its grid, drifting on its own rhythm",
+        "  vec3 f = g;",
+        "  f.x += (aSeed - 0.5) * 2.4 + sin(aSeed * 23.0 + uTime * 0.7) * 0.3;",
+        "  f.z += (fract(aSeed * 7.31) - 0.5) * 2.4;",
+        "  f.y = sin(g.x * 0.55 + t) * 0.2 + sin(g.z * 0.85 + t * 1.4) * 0.12 + sin(aSeed * 40.0 + uTime) * 0.6;",
+        "",
+        "  // FLOW (pointer): a winding pathway forms across the field through the",
+        "  // pointer. Dots near it are gathered into five close lanes and travel along it.",
+        "  float along = g.x - mx;",
+        "  float homePath = mz + sin(along * 0.32 + uTime * 0.5) * 1.3 * smoothstep(0.0, 6.0, abs(along));",
+        "  float reach = smoothstep(16.0, 4.0, abs(along));",
+        "  float pull = smoothstep(3.8, 1.0, abs(g.z - homePath)) * reach * uActive;",
+        "  float phase = fract(uTime * 0.13 + aSeed);",
+        "  float xf = g.x + (phase - 0.5) * 7.0;",
+        "  float alongF = xf - mx;",
+        "  float pathZ = mz + sin(alongF * 0.32 + uTime * 0.5) * 1.3 * smoothstep(0.0, 6.0, abs(alongF));",
+        "  float lane = (floor(fract(aSeed * 3.17) * 5.0) - 2.0) * 0.17;",
+        "  float rise = sin(alongF * 0.42 - uTime * 0.9) * 0.85 * smoothstep(0.0, 5.0, abs(alongF));",
+        "  vec3 w = vec3(xf, 0.25 + rise, pathZ + lane);",
+        "",
+        "  vec3 p = mix(f, w, pull);",
+        "  vNear = pull;",
+        "  vFade = mix(1.0, sin(3.14159 * phase), pull);",
+        "  vElev = p.y;",
         "  vSeed = aSeed;",
         "  vUvPos = vec2(position.x / 26.0 + 0.5, position.z / 13.0 + 0.5);",
         "  vec4 mv = modelViewMatrix * vec4(p, 1.0);",
         "  gl_Position = projectionMatrix * mv;",
-        "  gl_PointSize = (1.6 + aSeed * 1.8) * (1.0 + vNear * 1.3) * uPixelRatio * (6.0 / -mv.z);",
+        "  gl_PointSize = (2.0 + aSeed * 2.0) * (1.0 + pull * 0.7) * uPixelRatio * (6.0 / -mv.z);",
         "}",
       ].join("\n"),
       fragmentShader: [
@@ -305,6 +317,7 @@
         "varying float vElev;",
         "varying float vSeed;",
         "varying float vNear;",
+        "varying float vFade;",
         "varying vec2 vUvPos;",
         "vec3 fluxSpectrum(float t) {",
         "  t = fract(t);",
@@ -323,9 +336,9 @@
         "  vec3 hue = fluxSpectrum(vUvPos.x * 0.85 + drift);",
         "  float energy = smoothstep(0.15, 1.3, abs(vElev));",
         "  // pale sky dots throughout; near the pointer they only deepen a little",
-        "  vec3 col = mix(uStop0, uStop1, vNear * 0.45);",
-        "  float alpha = (0.34 + energy * 0.22) * (0.55 + vSeed * 0.45);",
-        "  alpha = min(1.0, alpha + vNear * 0.4);",
+        "  vec3 col = mix(uStop0, uStop1, vNear);",
+        "  float alpha = (0.36 + energy * 0.2) * (0.55 + vSeed * 0.45);",
+        "  alpha = mix(alpha, 0.95 * vFade, vNear);",
         "  gl_FragColor = vec4(col, alpha);",
         "}",
       ].join("\n"),
@@ -358,7 +371,11 @@
       mouse.ty = 0;
       mouse.activeTarget = 0;
     }
-    wrap.addEventListener("pointermove", onPointerMove);
+    if (window.matchMedia("(hover: none)").matches) {
+      mouse.activeTarget = 1;
+    } else {
+      wrap.addEventListener("pointermove", onPointerMove);
+    }
     wrap.addEventListener("pointerleave", onPointerLeave);
 
     var visible = true;
