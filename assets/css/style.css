@@ -1361,27 +1361,12 @@ textarea:focus-visible {
   .split .service:first-child { padding-top: 0; border-top: 0; }
 }
 
-/* ============ Pill labels and white-on-cobalt band (Nov 2026) ============
+/* ============ White-on-cobalt band (Nov 2026) ============
    White text needs the deeper cobalt behind it: white on cobalt is 6.5:1,
-   while white on the lighter palette blue is only about 3:1. */
-
-.section__kicker,
-.page-hero__kicker {
-  display: table;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0.6rem 1.4rem;
-  border-radius: 10rem;
-  background: var(--flux-cobalt);
-  color: #fff;
-  font-size: 1.2rem;
-}
-
-.split__head .section__kicker,
-.contact-direct .section__kicker,
-.form .section__kicker { margin-left: 0; }
+   while white on the lighter palette blue is only about 3:1.
+   Section labels are plain cobalt text; inside the band they turn white. */
 
 .section--blue { background: var(--flux-cobalt); color: #fff; }
-.section--blue .section__kicker { background: #fff; color: var(--flux-cobalt); }
+.section--blue .section__kicker { color: #fff; }
 .section--blue .btn-pill--ghost { border-color: #fff; color: #fff; }
 .section--blue .btn-pill--ghost:hover { background: #fff; color: var(--ink); }
