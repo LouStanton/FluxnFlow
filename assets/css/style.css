@@ -1338,3 +1338,25 @@ textarea:focus-visible {
   font-weight: 600;
   letter-spacing: 0.1em;
 }
+
+/* ============ Split section: heading left, content right ============
+   Stacks on small screens; from 900px the heading holds the left
+   column (and stays in view) while the list scrolls on the right. */
+
+.split { display: grid; gap: 4rem; }
+
+.split__head .section__kicker,
+.split__head .section__title { text-align: left; margin-left: 0; margin-right: 0; }
+
+.split .services__list { margin-top: 0; }
+.split .service { text-align: left; padding: 3.2rem 0; }
+.split .service:last-child { border-bottom: 1px solid var(--line); }
+.split .service__desc { margin-left: 0; margin-right: 0; max-width: 58ch; }
+
+@media (min-width: 900px) {
+  .split { grid-template-columns: 5fr 7fr; gap: 8rem; align-items: start; }
+  .split__head { position: sticky; top: 12rem; }
+  .split__head .section__title { font-size: clamp(3rem, 4.2vw, 5.2rem); max-width: 12ch; }
+  .split .service { padding: 4rem 0; }
+  .split .service:first-child { padding-top: 0; border-top: 0; }
+}
