@@ -20,6 +20,8 @@
   --flux-lime: #dbff66;
   --flux-blue: #4298fb;
   --flux-sky: #b4d6ff;
+  /* Cobalt: the one colour that may carry text (6.5:1 on white) */
+  --flux-cobalt: #1257c9;
 
   --gradient-flux-linear: linear-gradient(135deg, var(--flux-blue) 0%, var(--flux-sky) 50%, var(--flux-lime) 100%);
 
@@ -1247,22 +1249,12 @@ main { display: block; }
 
 /* ============ Palette pass (Nov 2026): lime, blue, sky ============ */
 
-/* Kickers: ink text on a sky pill, so the label carries colour without
-   relying on coloured type. */
+/* Kickers: cobalt text, no pill. Cobalt is a darker shade of the
+   palette blue and passes contrast as small text on white. */
 .section__kicker,
 .page-hero__kicker {
-  display: table;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0.5rem 1.2rem;
-  border-radius: 10rem;
-  background: var(--flux-sky);
-  color: var(--ink);
-  font-size: 1.2rem;
+  color: var(--flux-cobalt);
 }
-
-.contact-direct .section__kicker,
-.form .section__kicker { margin-left: 0; }
 
 /* Buttons: lime on hover, ink text throughout */
 .btn-pill { transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
@@ -1286,7 +1278,7 @@ textarea:focus-visible {
   border: 0;
 }
 
-.section--blue .section__kicker { background: var(--ink); color: var(--flux-lime); }
+.section--blue .section__kicker { color: var(--ink); }
 .section--blue .prose p { font-size: 2rem; }
 .section--blue .btn-pill--ghost { border-color: var(--ink); }
 
