@@ -9,6 +9,11 @@
 (function () {
   "use strict";
 
+  // Show the home page as the bare domain, never /index.html
+  if (/^https?:$/.test(location.protocol) && /\/index\.html$/.test(location.pathname)) {
+    history.replaceState(null, "", location.pathname.replace(/index\.html$/, "") + location.search + location.hash);
+  }
+
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var THREE_CDN_URL = "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
 

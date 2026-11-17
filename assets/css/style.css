@@ -30,7 +30,8 @@
   /* Type */
   --font-display: "Google Sans Flex", system-ui, sans-serif;
   --font-body: "Google Sans Flex", system-ui, sans-serif;
-  --font-mono: "DM Mono", ui-monospace, "SF Mono", "Menlo", "Consolas", "Liberation Mono", monospace;
+  /* Labels use the same family as everything else (was DM Mono) */
+  --font-mono: var(--font-display);
 
   /* Spacing */
   --space-2xs: 0.5rem;
@@ -1321,4 +1322,26 @@ textarea:focus-visible {
   background: linear-gradient(transparent 62%, var(--flux-lime) 62%, var(--flux-lime) 94%, transparent 94%);
   padding: 0 0.08em;
   border-radius: 0;
+}
+
+/* ============ Solid page headers and sans labels (Nov 2026) ============ */
+
+/* One bold colour behind every page title, no gradient. Ink on blue is 6.5:1. */
+.page-hero { background: var(--flux-blue); border-bottom: 0; }
+.page-hero__gradient { display: none; }
+.page-hero__kicker { color: var(--ink); }
+.page-hero .btn-pill--ghost { border-color: var(--ink); }
+.header__logo-mark { background: var(--flux-blue); }
+
+/* The mid-page band steps down to sky so blue stays the header's colour */
+.section--blue { background: var(--flux-sky); }
+
+/* Labels: Google Sans Flex, semi-bold capitals */
+.section__kicker,
+.page-hero__kicker,
+.case-body__heading,
+.steps__item::before {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.1em;
 }
