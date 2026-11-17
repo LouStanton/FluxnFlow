@@ -162,7 +162,11 @@
           seed = Math.abs(seed);
           var col = fluxColorAt(x / cols);
           ctx.beginPath();
-          ctx.arc(x * gap, y * gap, 1.3 + seed * 0.6, 0, Math.PI * 2);
+          var chaos = Math.max(0, Math.min(1, 1 - (x / cols) / 0.6));
+          var seed2 = Math.abs((Math.sin(x * 39.346 + y * 11.135) * 24634.6345) % 1);
+          var jx = (seed - 0.5) * gap * 1.6 * chaos;
+          var jy = (seed2 - 0.5) * gap * 1.6 * chaos;
+          ctx.arc(x * gap + jx, y * gap + jy, 1.3 + seed * 0.6, 0, Math.PI * 2);
           ctx.fillStyle = "rgba(" + col[0] + ", " + col[1] + ", " + col[2] + ", " + (0.5 + seed * 0.3) + ")";
           ctx.fill();
         }
@@ -270,10 +274,17 @@
         "  float mDist = distance(p.xz * vec2(1.0, 2.0), uMouse * vec2(13.0, 6.5));",
         "  // pointer: a tall swell plus rings rippling outward from the cursor",
         "  float near = smoothstep(7.0, 0.0, mDist);",
-        "  e += near * 2.3 * uActive;",
-        "  e += sin(mDist * 2.6 - uTime * 6.5) * 0.7 * near * uActive;",
-        "  e += sin(p.x * 1.7 + uTime * 3.2) * 0.25 * near * uActive;",
+        "  e += near * 1.1 * uActive;",
+        "  e += sin(mDist * 2.6 - uTime * 6.5) * 0.45 * near * uActive;",
         "  vNear = near * uActive;",
+        "  // flux to flow: scattered and restless on the left, settling into calm",
+        "  // ordered rows on the right. The pointer stirs order back into flux.",
+        "  float chaos = smoothstep(5.0, -10.0, position.x);",
+        "  chaos = clamp(chaos + vNear * 0.9, 0.0, 1.0);",
+        "  e *= mix(0.55, 1.0, chaos);",
+        "  e += sin(aSeed * 40.0 + uTime * 1.4) * 0.75 * chaos;",
+        "  p.x += ((aSeed - 0.5) * 1.9 + sin(aSeed * 23.0 + uTime * 0.9) * 0.25) * chaos;",
+        "  p.z += (fract(aSeed * 7.31) - 0.5) * 1.9 * chaos;",
         "  p.y = e;",
         "  vElev = e;",
         "  vSeed = aSeed;",
