@@ -455,6 +455,24 @@
      ------------------------------------------------------------ */
   var filterBtns = document.querySelectorAll("[data-filter]");
   var workCards = document.querySelectorAll("[data-category]");
+
+  /* Mosaic: one full-width tile, then two squares, repeating over the
+     cards that are showing. A square left on its own goes full width,
+     so every filter (and any number of projects) fills whole rows. */
+  var mosaic = document.querySelector(".work-grid--mosaic");
+  function layoutMosaic() {
+    if (!mosaic) return;
+    var shown = Array.prototype.filter.call(workCards, function (c) {
+      return !c.classList.contains("is-filtered-out");
+    });
+    shown.forEach(function (card, i) {
+      var full = i % 3 === 0 || (i % 3 === 1 && i === shown.length - 1);
+      card.classList.toggle("work-card--full", full);
+      card.classList.toggle("work-card--square", !full);
+    });
+  }
+  layoutMosaic();
+
   if (filterBtns.length && workCards.length) {
     filterBtns.forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -476,6 +494,7 @@
         });
         var empty = document.querySelector("[data-work-empty]");
         if (empty) empty.hidden = shown > 0;
+        layoutMosaic();
       });
     });
   }
