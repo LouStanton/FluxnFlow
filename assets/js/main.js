@@ -17,6 +17,15 @@
   var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var THREE_CDN_URL = "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js";
 
+  // Animated project tiles: hold on the still image for people who prefer less motion
+  if (reducedMotion) {
+    document.querySelectorAll(".work-card__loop").forEach(function (v) {
+      v.removeAttribute("autoplay");
+      v.pause();
+      v.remove();
+    });
+  }
+
   /* ------------------------------------------------------------
      Custom cursor - an ampersand follows the pointer on devices
      with a real mouse. Skipped entirely on touch (no pointer:fine).
