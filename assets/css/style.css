@@ -2170,3 +2170,26 @@ h1, h2, h3 { letter-spacing: -0.015em; }
 /* Services: square-cornered portrait */
 .about-photo { border-radius: 0; }
 .services-intro__text p + p { margin-top: 1.4em; }
+
+/* Footer: All-of-Government panel tag in lime */
+.footer__panel {
+  margin-top: 3.2rem;
+  color: var(--flux-lime);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Mission band: deep red with white text */
+.section--blue { background: var(--flux-cobalt); color: #fff; }
+.section--blue .section__kicker,
+.section--blue .section__title { color: #fff; }
+.section--blue .btn-pill--ghost { border-color: #fff; color: #fff; background: transparent; }
+.section--blue .btn-pill--ghost:hover { background: #fff; color: var(--flux-cobalt); }
+
+/* Header: clear at the top so the page-header glow runs to the top edge;
+   the cream bar appears once the page scrolls */
+.header:not(.is-scrolled) { background: transparent; }
+.header.is-scrolled { background: var(--paper); }
+/* Start the glow above the page edge so its blur doesn't fade out at the top */
+.page-hero__gradient { inset: -10rem 0 0 0; }
