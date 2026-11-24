@@ -2218,7 +2218,7 @@ h1, h2, h3 { letter-spacing: -0.015em; }
 }
 
 /* Projects: LPE Solar Bank card plays its video, cropped to fill the tile */
-.work-card__media--video { container-type: size; }
+.work-card__media--video { container-type: size; padding: 0; }
 .work-card__media--video iframe {
   position: absolute;
   top: 50%;
