@@ -2193,3 +2193,54 @@ h1, h2, h3 { letter-spacing: -0.015em; }
 .header.is-scrolled { background: var(--paper); }
 /* Start the glow above the page edge so its blur doesn't fade out at the top */
 .page-hero__gradient { inset: -10rem 0 0 0; }
+
+/* ============ Round of 24 Nov (2) ============ */
+
+/* Home lede: even line lengths so the last line reads as deliberate */
+.page-hero__lede { text-wrap: balance; }
+
+/* Home "What I do": only the image and title are links */
+.work-card--service:hover { opacity: 1; }
+.work-card__media-link { display: block; transition: opacity var(--dur-fast) var(--ease-out); }
+.work-card__media-link:hover { opacity: 0.85; }
+.work-card--service .work-card__title a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 0.3rem;
+  text-underline-offset: 0.5rem;
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+.work-card--service .work-card__title a:hover,
+.work-card--service .work-card__title a:focus-visible,
+.work-card--service:has(.work-card__media-link:hover) .work-card__title a {
+  text-decoration-color: var(--rose);
+}
+
+/* Projects: LPE Solar Bank card plays its video, cropped to fill the tile */
+.work-card__media--video { container-type: size; }
+.work-card__media--video iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100cqw, 177.78cqh);
+  height: max(100cqh, 56.25cqw);
+  transform: translate(-50%, -50%);
+  border: 0;
+  pointer-events: none;
+}
+
+/* Services: LinkedIn sits under the photo; text runs the full width */
+.services-intro__aside .services-links { margin-top: 1.6rem; }
+.services-intro__aside .about-photo { float: none; margin: 0; }
+.services-intro__text { margin-top: 2.4rem; }
+.services-intro p { max-width: none; }
+@media (min-width: 800px) {
+  .services-intro { grid-template-columns: 24rem minmax(0, 1fr); }
+  .services-intro__text { margin-top: 0; }
+}
+.accordion { margin-top: 6rem; }
+.accordion__desc { max-width: none; }
+
+/* Lighter rules between accordion list items */
+.accordion__list li { border-top-color: rgba(21, 20, 21, 0.07); }
