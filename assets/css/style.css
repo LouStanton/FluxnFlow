@@ -2031,3 +2031,142 @@ h1, h2, h3 { letter-spacing: -0.015em; }
 
 /* Footer: the LinkedIn link sits with the footer menu */
 .footer__socials a { font-size: inherit; }
+
+/* ============ Round of 24 Nov ============ */
+
+/* Project images: square corners everywhere */
+.work-card__media,
+.film__embed,
+.case-media,
+.case-gallery img,
+.case-placeholder { border-radius: 0; }
+
+/* What I do: heading only, so the cards sit closer under it */
+.home #work .section__title { margin-bottom: 4rem; }
+
+/* ============ Colourway of 24 Nov: Marshmallow / Desert Rose / Love Bird ============
+   Screen colours matched to Victoria's Pantone reference image:
+   Cream         #FCFBF9  page background (Marshmallow, lightened)
+   Desert Rose   #D06977  replaces the blues: Mission band, Contact page, logo mark.
+                          Text on it is a deeper charcoal (#141314, 5.2:1); white is too faint.
+   Love Bird     #D4E372  replaces lime: highlight, hovers, bullets, step chips
+   Soft dark grey #2B2A2C replaces black: text, footer, dark buttons
+   Small rose text (labels) uses a deeper rose, #A84A57 (5.1:1 on the cream). */
+:root {
+  --ink: #2b2a2c;
+  --ink-strong: #1f1e20;
+  --ink-secondary: #5e5a58;
+  --paper: #fcfbf9;
+  --surface: #fcfbf9;
+  --line: rgba(43, 42, 44, 0.14);
+  --line-strong: rgba(43, 42, 44, 0.28);
+  --flux-lime: #d4e372;
+  --flux-blue: #d06977;
+  --flux-sky: #ebc3c8;
+  --flux-cobalt: #a84a57;
+  --rose: #d06977;
+  --on-rose: #141314;
+}
+
+.header { background: var(--paper); }
+
+/* Client logos sit on the cream without white boxes */
+.brands__logo { mix-blend-mode: multiply; }
+
+/* Soft page-header wash */
+.page-hero__gradient {
+  background:
+    radial-gradient(40% 58% at 82% 8%, rgba(208, 105, 119, 0.45) 0%, transparent 70%),
+    radial-gradient(34% 48% at 98% 55%, var(--flux-sky) 0%, transparent 70%),
+    radial-gradient(26% 38% at 56% 0%, rgba(212, 227, 114, 0.45) 0%, transparent 70%),
+    radial-gradient(26% 36% at 8% 96%, var(--flux-sky) 0%, transparent 72%),
+    radial-gradient(18% 26% at 70% 62%, rgba(212, 227, 114, 0.35) 0%, transparent 75%);
+}
+
+/* Mission band: Desert Rose with deep charcoal text */
+.section--blue { background: var(--rose); color: var(--on-rose); }
+.section--blue .section__kicker { color: var(--on-rose); }
+.section--blue .btn-pill--ghost { border-color: var(--on-rose); color: var(--on-rose); background: transparent; }
+.section--blue .btn-pill--ghost:hover { background: var(--on-rose); color: var(--paper); }
+
+/* Contact page: Desert Rose with dark text */
+.page--blue main { background: var(--rose); color: var(--on-rose); }
+.page--blue .page-hero__kicker,
+.page--blue .page-hero__lede { color: var(--on-rose); }
+.page--blue .header:not(.is-scrolled) { background: transparent; }
+.page--blue .header:not(.is-scrolled) .header__logo,
+.page--blue .header:not(.is-scrolled) .header__nav a { color: var(--on-rose); }
+.page--blue .header:not(.is-scrolled) .header__logo-mark { background: var(--on-rose); }
+.page--blue .header:not(.is-scrolled) .header__menu-toggle { border-color: rgba(43, 42, 44, 0.5); }
+.page--blue .header:not(.is-scrolled) .header__menu-toggle span,
+.page--blue .header:not(.is-scrolled) .header__menu-toggle span::before,
+.page--blue .header:not(.is-scrolled) .header__menu-toggle span::after { background: var(--on-rose); }
+.contact-details__line { color: var(--on-rose); }
+.contact-details__line:hover {
+  color: var(--on-rose);
+  text-decoration: underline;
+  text-decoration-color: var(--flux-lime);
+  text-decoration-thickness: 0.4rem;
+  text-underline-offset: 0.8rem;
+}
+
+/* Logo mark in Desert Rose */
+.header__logo-mark { background: var(--rose); }
+
+/* Page header glow: stronger version. Full-strength rose and Love Bird,
+   larger and less blurred, weighted to the right so the heading and
+   label on the left stay on near-cream. */
+.page-hero__gradient {
+  background:
+    radial-gradient(50% 80% at 88% 10%, var(--rose) 0%, var(--rose) 18%, transparent 70%),
+    radial-gradient(40% 70% at 100% 80%, var(--flux-sky) 0%, transparent 70%),
+    radial-gradient(32% 60% at 62% 0%, var(--flux-lime) 0%, var(--flux-lime) 15%, transparent 70%),
+    radial-gradient(30% 50% at 2% 100%, var(--flux-sky) 0%, transparent 72%),
+    radial-gradient(24% 40% at 74% 78%, var(--flux-lime) 0%, transparent 75%);
+  filter: blur(40px);
+  opacity: 1;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}
+
+/* ============ Colourway v3 of 24 Nov: coral / lime (overrides the Desert Rose block above) ============
+   Pale     #EFE8E8   Coral #FF6464   Lime #DBFF66   Mid grey #5E5B59
+   Cream    #FCFBF9   Deep rose #A84A58   Deep lime #B3C337   Charcoal #151415 */
+:root {
+  --ink: #151415;
+  --ink-strong: #151415;
+  --ink-secondary: #5e5b59;
+  --paper: #fcfbf9;
+  --surface: #fcfbf9;
+  --line: rgba(21, 20, 21, 0.14);
+  --line-strong: rgba(21, 20, 21, 0.28);
+  --flux-lime: #dbff66;
+  --flux-blue: #ff6464;
+  --flux-sky: #efe8e8;
+  --flux-cobalt: #a84a58;
+  --rose: #ff6464;
+  --on-rose: #151415;
+}
+.page--blue .header:not(.is-scrolled) .header__menu-toggle { border-color: rgba(21, 20, 21, 0.5); }
+
+/* Subtle header wash, in coral and lime */
+.page-hero__gradient {
+  background:
+    radial-gradient(40% 58% at 82% 8%, rgba(255, 100, 100, 0.45) 0%, transparent 70%),
+    radial-gradient(34% 48% at 98% 55%, var(--flux-sky) 0%, transparent 70%),
+    radial-gradient(26% 38% at 56% 0%, rgba(219, 255, 102, 0.45) 0%, transparent 70%),
+    radial-gradient(26% 36% at 8% 96%, var(--flux-sky) 0%, transparent 72%),
+    radial-gradient(18% 26% at 70% 62%, rgba(219, 255, 102, 0.35) 0%, transparent 75%);
+  filter: blur(70px);
+  opacity: 0.6;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.page-hero--home .page-hero__gradient { opacity: 0.45; }
+
+/* Accordion bullets in coral */
+.accordion__list li::before { background: var(--rose); }
+
+/* Services: square-cornered portrait */
+.about-photo { border-radius: 0; }
+.services-intro__text p + p { margin-top: 1.4em; }

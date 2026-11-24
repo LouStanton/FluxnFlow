@@ -177,13 +177,13 @@
     window.addEventListener("resize", draw);
   }
 
-  // Dot field stops - blue tones only: sky, blue, cobalt, blue, sky
+  // Dot field stops: pale, coral, deep lime, coral, pale (dots use the coral)
   var FLUX_STOPS = [
-    [180, 214, 255],
-    [66, 152, 251],
-    [18, 87, 201],
-    [66, 152, 251],
-    [180, 214, 255],
+    [239, 232, 232],
+    [255, 100, 100],
+    [179, 195, 55],
+    [255, 100, 100],
+    [239, 232, 232],
   ];
 
   function fluxColorAt(t) {
@@ -239,17 +239,17 @@
       uTime: { value: 0 },
       uMouse: { value: new THREE.Vector2(0, 0) },
       uPixelRatio: { value: Math.min(window.devicePixelRatio || 1, 2) },
-      uColInk: { value: new THREE.Color("#0d0d10") },
+      uColInk: { value: new THREE.Color("#151415") },
       // 0 at rest, rises to 1 while the pointer is over the banner
       uActive: { value: 0 },
       // half-width of the visible field at the origin, so the effect sits under the pointer
       uHalfW: { value: 8 },
-      // Blue tones only - sky, blue, cobalt - sampled across the field by position + slow drift
-      uStop0: { value: new THREE.Color("#b4d6ff") },
-      uStop1: { value: new THREE.Color("#4298fb") },
-      uStop2: { value: new THREE.Color("#1257c9") },
-      uStop3: { value: new THREE.Color("#4298fb") },
-      uStop4: { value: new THREE.Color("#b4d6ff") },
+      // Rose tones with a touch of Love Bird, sampled across the field by position + slow drift
+      uStop0: { value: new THREE.Color("#ff6464") },
+      uStop1: { value: new THREE.Color("#ff6464") },
+      uStop2: { value: new THREE.Color("#b3c337") },
+      uStop3: { value: new THREE.Color("#ff6464") },
+      uStop4: { value: new THREE.Color("#efe8e8") },
     };
 
     var material = new THREE.ShaderMaterial({
